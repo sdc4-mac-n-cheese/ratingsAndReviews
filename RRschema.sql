@@ -8,10 +8,10 @@ DROP TABLE IF EXISTS `Products`;
 
 CREATE TABLE `Products` (
   `id` SERIAL NOT NULL,
-  `name` TEXT NOT NULL,
-  `slogan` TEXT NOT NULL,
-  `description` TEXT NOT NULL,
-  `category` TEXT NOT NULL,
+  `name` VARCHAR NOT NULL,
+  `slogan` VARCHAR NOT NULL,
+  `description` VARCHAR NOT NULL,
+  `category` VARCHAR NOT NULL,
   `default_price` INTEGER NOT NULL
   PRIMARY KEY (`id`)
 );
@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS `Characteristics`;
 CREATE TABLE `Characteristics` (
   `id` SERIAL NOT NULL,
   `product_id` INTEGER NOT NULL,
-  `name` TEXT NOT NULL,
+  `name` VARCHAR NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `Review Photos`;
 CREATE TABLE `Review Photos` (
   `id` SERIAL NOT NULL,
   `review_id` INTEGER NOT NULL,
-  `url` TEXT NOT NULL,
+  `url` VARCHAR NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -63,13 +63,13 @@ CREATE TABLE `Review` (
   `product_id` INTEGER NOT NULL,
   `rating` INTEGER NOT NULL,
   `date` INTEGER NOT NULL,
-  `summary` TEXT NOT NULL,
-  `body` TEXT NOT NULL,
+  `summary` VARCHAR NOT NULL,
+  `body` VARCHAR NOT NULL,
   `recommend` BOOLEAN NOT NULL,
   `reported` BOOLEAN NOT NULL,
-  `reviewer_name` TEXT NOT NULL,
-  `reviewer_email` TEXT NOT NULL,
-  `response` TEXT NOT NULL,
+  `reviewer_name` VARCHAR NOT NULL,
+  `reviewer_email` VARCHAR NOT NULL,
+  `response` VARCHAR NOT NULL,
   `helpfulness` INTEGER NOT NULL,
   PRIMARY KEY (`id`)
 );

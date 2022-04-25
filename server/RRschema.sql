@@ -8,10 +8,6 @@ DROP TABLE IF EXISTS Products;
 CREATE TABLE Products (
   id SERIAL NOT NULL,
   name VARCHAR NOT NULL,
-  slogan VARCHAR NOT NULL,
-  description VARCHAR NOT NULL,
-  category VARCHAR NOT NULL,
-  default_price INTEGER NOT NULL,
   PRIMARY KEY(id)
 );
 
@@ -25,7 +21,8 @@ CREATE TABLE Characteristic_reviews (
   characteristic_id INTEGER NOT NULL,
   review_id INTEGER NOT NULL,
   value INTEGER NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  FOREIGN KEY(review_id) REFERENCES review(id)
 );
 
 
@@ -37,7 +34,8 @@ CREATE TABLE Characteristics (
   id SERIAL NOT NULL,
   product_id INTEGER NOT NULL,
   name VARCHAR NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  FOREIGN KEY(product_id) REFERENCES product(id)
 );
 
 
@@ -49,7 +47,8 @@ CREATE TABLE Review_Photos (
   id SERIAL NOT NULL,
   review_id INTEGER NOT NULL,
   url VARCHAR NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  FOREIGN KEY(review_id) REFERENCES review(id)
 );
 
 
@@ -70,24 +69,28 @@ CREATE TABLE Review (
   reviewer_email VARCHAR NOT NULL,
   response VARCHAR NOT NULL,
   helpfulness INTEGER NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  FOREIGN KEY(product_id) REFERENCES product(id)
 );
+
+-- change date to timestamp
+
+ALTER TABLE Review ALTER COLUMN date TYPE TEXT;
+UPDATE review SET date = to_timestamp(review.date::bigint / 1000);
 
 -- ---
 -- Foreign Keys
 -- ---
 
--- ALTER TABLE Characteristic_reviews ADD FOREIGN KEY (product_id) REFERENCES Products (id);
--- ALTER TABLE Characteristics ADD FOREIGN KEY (product_id) REFERENCES Products (id);
--- ALTER TABLE Review Photos ADD FOREIGN KEY (review_id) REFERENCES Review (id);
--- ALTER TABLE Review ADD FOREIGN KEY (product_id) REFERENCES Products (id);
+ALTER TABLE Characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES Review (id);
+ALTER TABLE Characteristics ADD FOREIGN KEY (product_id) REFERENCES Products (id);
+ALTER TABLE Review Photos ADD FOREIGN KEY (review_id) REFERENCES Review (id);
+ALTER TABLE Review ADD FOREIGN KEY (product_id) REFERENCES Products (id);
 
--- ALTER TABLE `product` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Meta/Ratings` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Characteristics` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Review Photos` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Response from seller` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Review` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
+CREATE INDEX id ON review (id);
+CREATE INDEX product_id_index ON review (product_id);
+CREATE INDEX recommend_index ON review (recommend);
+CREATE INDEX reported_index ON review (reported);
+CREATE INDEX 
 -- psql -U ptriklee -d ratingsreviews -a -f RRschema.sql
 -- ^^ run from default terminal (first psql will select postgres)

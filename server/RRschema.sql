@@ -87,10 +87,13 @@ ALTER TABLE Characteristics ADD FOREIGN KEY (product_id) REFERENCES Products (id
 ALTER TABLE Review Photos ADD FOREIGN KEY (review_id) REFERENCES Review (id);
 ALTER TABLE Review ADD FOREIGN KEY (product_id) REFERENCES Products (id);
 
-CREATE INDEX id ON review (id);
+CREATE INDEX id_index ON review (id);
 CREATE INDEX product_id_index ON review (product_id);
 CREATE INDEX recommend_index ON review (recommend);
 CREATE INDEX reported_index ON review (reported);
-CREATE INDEX 
+CREATE INDEX rating_index ON review (rating);
+CREATE INDEX characteristic_id_index ON Characteristic_reviews (characteristic_id);
+CREATE INDEX review_photos_id_index ON review_photos (id);
+CREATE INDEX characteristics_product_id_index ON characteristics (product_id);
 -- psql -U ptriklee -d ratingsreviews -a -f RRschema.sql
 -- ^^ run from default terminal (first psql will select postgres)

@@ -1,7 +1,7 @@
 const axios = require ('axios')
 const express = require ('express')
 // const RR = require('./db/index.js')
-const { reviews, meta, markHelpful, markReported } = require('./queries.js')
+const { reviews, meta, markHelpful, markReported, postreview } = require('./queries.js')
 
 const app = express();
 const PORT = 3000;
@@ -27,7 +27,7 @@ app.get('/reviews', (req, res) => {
   let count = '5';
   let product_id = '2';
   let offset = (Number(page) - 1) * Number(count);
-  pool.query(reviews, [count, offset.toString(), req.query.product_id])
+  pool.query( reviews, [count, offset.toString(), req.query.product_id])
   // pool.query(reviews, [product_id])
     .then((data) => {
       console.log('data>>', data.rows[0])

@@ -1,0 +1,7 @@
+SDCCSVFILES/
+
+node_modules
+
+server/.DS_Store
+
+.env

@@ -16,6 +16,7 @@ const pool = new Pool({
   host: process.env.HOST,
   database: process.env.DATABASE,
   port: process.env.PGPORT,
+  password: process.env.PASSWORD,
 });
 
 // pool.connect(() => {

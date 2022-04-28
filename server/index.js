@@ -23,8 +23,10 @@ const pool = new Pool({
 //   console.log('db connected');
 // })
 
+// 18.144.45.87
+
 app.get('/', (req, res) => {
-  res.send('process.env.USER>>>', process.env.USER)
+  res.send(`'process.env.USER>>>', ${process.env.USER}`)
 })
 
 

@@ -5,28 +5,28 @@ import { check, sleep } from 'k6';
 import { Counter } from 'k6/metrics';
 export const requests = new Counter('http_reqs');
 
-// export const options = {
-//   stages: [
-//     { target: 10, duration: '30s' },
-//     // { target: 10, duration: '30s' },
-//   ],
-//   thresholds: {
-//     requests: ['count < 100'],
-//   },
-// };
-
 export const options = {
-  scenarios: {
-    constant_request_rate: {
-      executor: 'constant-arrival-rate',
-      rate: 1,
-      timeUnit: '1s',
-      duration: '1m',
-      preAllocatedVUs: 20,
-      maxVUs: 100,
-    },
+  stages: [
+    { target: 10, duration: '10s' },
+    { target: 10, duration: '10s' },
+  ],
+  thresholds: {
+    requests: ['count < 100'],
   },
 };
+
+// export const options = {
+//   scenarios: {
+//     constant_request_rate: {
+//       executor: 'constant-arrival-rate',
+//       rate: 1,
+//       timeUnit: '1s',
+//       duration: '1m',
+//       preAllocatedVUs: 20,
+//       maxVUs: 100,
+//     },
+//   },
+// };
 
 export default function () {
     const id = Math.floor(Math.random() * 1000011)

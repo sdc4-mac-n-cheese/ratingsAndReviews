@@ -1,9 +1,7 @@
 -- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- SET FOREIGN_KEY_CHECKS=0;
 
--- Table 'Products'
-
-DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS Products CASCADE;
 
 CREATE TABLE Products (
   id SERIAL NOT NULL,
@@ -11,10 +9,9 @@ CREATE TABLE Products (
   PRIMARY KEY(id)
 );
 
-
 -- Table 'Characteristic_reviews'
 
-DROP TABLE IF EXISTS Characteristic_reviews;
+DROP TABLE IF EXISTS Characteristic_reviews CASCADE;
 
 CREATE TABLE Characteristic_reviews (
   id SERIAL NOT NULL,
@@ -28,20 +25,20 @@ CREATE TABLE Characteristic_reviews (
 
 -- Table 'Characteristics'
 
-DROP TABLE IF EXISTS Characteristics;
+DROP TABLE IF EXISTS Characteristics CASCADE;
 
 CREATE TABLE Characteristics (
   id SERIAL NOT NULL,
   product_id INTEGER NOT NULL,
   name VARCHAR NOT NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(product_id) REFERENCES product(id)
+  FOREIGN KEY(product_id) REFERENCES products(id)
 );
 
 
 -- Table 'Review Photos'
 
-DROP TABLE IF EXISTS Review_Photos;
+DROP TABLE IF EXISTS Review_Photos CASCADE;
 
 CREATE TABLE Review_Photos (
   id SERIAL NOT NULL,
@@ -54,7 +51,7 @@ CREATE TABLE Review_Photos (
 
 -- Table 'Review'
 
-DROP TABLE IF EXISTS Review;
+DROP TABLE IF EXISTS Review CASCADE;
 
 CREATE TABLE Review (
   id SERIAL NOT NULL,
@@ -69,8 +66,7 @@ CREATE TABLE Review (
   reviewer_email VARCHAR NOT NULL,
   response VARCHAR NOT NULL,
   helpfulness INTEGER NOT NULL,
-  PRIMARY KEY(id),
-  FOREIGN KEY(product_id) REFERENCES product(id)
+  PRIMARY KEY(id)
 );
 
 -- change date to timestamp
@@ -82,11 +78,6 @@ UPDATE review SET date = to_timestamp(review.date::bigint / 1000);
 -- Foreign Keys
 -- ---
 
-ALTER TABLE Characteristic_reviews ADD FOREIGN KEY (review_id) REFERENCES Review (id);
-ALTER TABLE Characteristics ADD FOREIGN KEY (product_id) REFERENCES Products (id);
-ALTER TABLE Review Photos ADD FOREIGN KEY (review_id) REFERENCES Review (id);
-ALTER TABLE Review ADD FOREIGN KEY (product_id) REFERENCES Products (id);
-
 CREATE INDEX id_index ON review (id);
 CREATE INDEX product_id_index ON review (product_id);
 CREATE INDEX recommend_index ON review (recommend);
@@ -95,5 +86,6 @@ CREATE INDEX rating_index ON review (rating);
 CREATE INDEX characteristic_id_index ON Characteristic_reviews (characteristic_id);
 CREATE INDEX review_photos_id_index ON review_photos (id);
 CREATE INDEX characteristics_product_id_index ON characteristics (product_id);
+
 -- psql -U ptriklee -d ratingsreviews -a -f RRschema.sql
 -- ^^ run from default terminal (first psql will select postgres)

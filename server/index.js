@@ -2,14 +2,14 @@ const axios = require ('axios')
 const express = require ('express')
 // const RR = require('./db/index.js')
 const { reviews, meta, markHelpful, markReported, postreview } = require('./queries.js')
+require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 app.use(express.json());
 
 const { Pool } = require('pg');
-require('dotenv').config();
 
 const pool = new Pool({
   user: process.env.USER,

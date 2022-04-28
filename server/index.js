@@ -23,6 +23,11 @@ const pool = new Pool({
 //   console.log('db connected');
 // })
 
+app.get('/', (req, res) => {
+  res.send('process.env.USER>>>', process.env.USER)
+})
+
+
 app.get('/reviews', (req, res) => {
   let page = '1';
   let count = '5';

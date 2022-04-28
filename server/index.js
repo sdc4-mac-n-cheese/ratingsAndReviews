@@ -12,7 +12,7 @@ app.use(express.json());
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: process.env.USER,
+  user: process.env.USER1,
   host: process.env.HOST,
   database: process.env.DATABASE,
   port: process.env.PGPORT,
@@ -23,10 +23,15 @@ const pool = new Pool({
 //   console.log('db connected');
 // })
 
-// 18.144.45.87
+// loaderio-4d0794fcf933758de3fc53ee604472b3
+
 
 app.get('/', (req, res) => {
-  res.send(`'process.env.USER>>>', ${process.env.USER}`)
+  res.send(`'process.env.USER1>>>', ${process.env.USER1}`)
+})
+
+app.get('/loaderio-4d0794fcf933758de3fc53ee604472b3', (req, res) => {
+  res.send('loaderio-4d0794fcf933758de3fc53ee604472b3')
 })
 
 

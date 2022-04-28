@@ -23,6 +23,13 @@ const pool = new Pool({
 //   console.log('db connected');
 // })
 
+// 18.144.45.87
+
+app.get('/', (req, res) => {
+  res.send(`'process.env.USER>>>', ${process.env.USER}`)
+})
+
+
 app.get('/reviews', (req, res) => {
   let page = '1';
   let count = '5';

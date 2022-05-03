@@ -48,6 +48,7 @@ app.get('/reviews', (req, res) => {
     })
     .catch((err) => {
       console.log(err)
+      res.status(500).send(err)
     })
 })
 
@@ -60,6 +61,7 @@ app.get('/reviews/meta', (req, res) => {
     })
     .catch((err) => {
       console.log(err)
+      res.status(500).send(err)
     })
 })
 
@@ -70,6 +72,7 @@ app.put('/reviews/:review_id/helpful', (req, res) => {
     })
     .catch((err) => {
       console.log(err)
+      res.status(500).send(err)
     })
 })
 
@@ -80,6 +83,27 @@ app.put('/reviews/:review_id/report', (req, res) => {
     })
     .catch((err) => {
       console.log(err)
+      res.status(500).send(err)
+    })
+})
+
+app.post('/reviews', (req, res) => {
+  pool.query( postreview, [
+    req.query.product_id,
+    req.query.rating,
+    req.query.date,
+    req.query.summary,
+    req.query.body,
+    req.query.recommend,
+    req.query.name,
+    req.query.email,
+  ])
+    .then(() => {
+      res.send('review submitted')
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).send(err)
     })
 })
 
